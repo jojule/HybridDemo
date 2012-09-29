@@ -1,0 +1,11 @@
+<module>
+	<!-- This file is automatically updated based on new dependencies by the 
+		goal "vaadin:update-widgetset". -->
+
+	<!-- Inherit DefaultWidgetSet -->
+	<inherits name="com.vaadin.DefaultWidgetSet" />
+
+	<!-- Enable Super Dev Mode -->
+	<set-configuration-property name="devModeRedirectEnabled"
+		value="true" />
+</module>
