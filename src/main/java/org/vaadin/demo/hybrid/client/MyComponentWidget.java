@@ -7,10 +7,11 @@ public class MyComponentWidget extends Label {
     public static final String CLASSNAME = "mycomponent";
 
     public MyComponentWidget() {
-
-        // setText("MyComponent sets the text via MyComponentConnector using MyComponentState");
         setStyleName(CLASSNAME);
-
     }
+
+	public void setText(String text) {
+		super.setText("[MyComponentWidget: "+text+"]");
+	}
 
 }

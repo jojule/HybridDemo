@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.shared.ui.Connect;
 
-import org.vaadin.demo.hybrid.MyComponent;
+import org.vaadin.demo.hybrid.MyHybridComponent;
 import com.vaadin.client.communication.RpcProxy;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -15,7 +15,7 @@ import com.vaadin.shared.MouseEventDetails;
 import com.vaadin.client.MouseEventDetailsBuilder;
 import com.vaadin.client.communication.StateChangeEvent;
 
-@Connect(MyComponent.class)
+@Connect(MyHybridComponent.class)
 public class MyComponentConnector extends AbstractComponentConnector {
 
     MyComponentServerRpc rpc = RpcProxy
@@ -24,12 +24,10 @@ public class MyComponentConnector extends AbstractComponentConnector {
     public MyComponentConnector() {    
         registerRpc(MyComponentClientRpc.class, new MyComponentClientRpc() {
             public void alert(String message) {
-            	// TODO Do something useful
                 Window.alert("Message from the server: "+message);
             }
         });
 
-		// TODO ServerRpc usage example, do something useful instead
         getWidget().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 final MouseEventDetails mouseDetails = MouseEventDetailsBuilder

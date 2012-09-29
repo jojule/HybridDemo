@@ -5,8 +5,9 @@ import org.vaadin.demo.hybrid.client.MyComponentServerRpc;
 import org.vaadin.demo.hybrid.client.MyComponentState;
 
 import com.vaadin.shared.MouseEventDetails;
+import com.vaadin.ui.AbstractComponent;
 
-public class MyComponent extends com.vaadin.ui.AbstractComponent {
+public class MyHybridComponent extends AbstractComponent {
 
     private MyComponentServerRpc rpc = new MyComponentServerRpc() {
         private int clickCount = 0;
@@ -19,11 +20,10 @@ public class MyComponent extends com.vaadin.ui.AbstractComponent {
             }
             // update shared state
             getState().text="You have clicked " + clickCount + " times";
-            requestRepaint();
         }
     };  
 
-    public MyComponent() {
+    public MyHybridComponent() {
         getState().text="This is MyComponent";
         registerRpc(rpc);
     }
