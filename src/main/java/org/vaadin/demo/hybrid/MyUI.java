@@ -6,12 +6,10 @@ import com.vaadin.navigator.Navigator.SimpleViewDisplay;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -22,28 +20,31 @@ public class MyUI extends UI {
 
 	protected void init(VaadinRequest request) {
 		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(new Label("Online mode"));
+		layout.setSizeFull();
 		layout.addComponent(buildMenu(navigator));
 		layout.addComponent(display);
+		layout.setExpandRatio(display, 1.0f);
 		setContent(layout);
 	}
 
 	@SuppressWarnings("unchecked")
 	private Component buildMenu(final Navigator navigator) {
-		HorizontalLayout menu = new HorizontalLayout();
+		MenuBar menu = new MenuBar();
+		menu.setWidth("100%");
 
-		for (Class<? extends View> viewClass : new Class[] { HybridView.class, FooView.class,
-				BarView.class }) {
+		for (Class<? extends View> viewClass : new Class[] { WorkhoursView.class, AdminView.class,
+				ReportView.class }) {
 			String name = viewClass.getSimpleName();
 			if (name.indexOf("View") > 0)
 				name = name.substring(0, name.indexOf("View"));
-			final String path = viewClass == HybridView.class ? "" : name
+			final String path = viewClass == WorkhoursView.class ? "" : name
 					.toLowerCase();
-			menu.addComponent(new Button(name, new ClickListener() {
-				public void buttonClick(ClickEvent event) {
+			menu.addItem(name, new Command() {
+				public void menuSelected(MenuItem selectedItem) {
 					navigator.navigateTo(path);
+					
 				}
-			}));
+			});
 			navigator.addView(path, viewClass);
 		}
 

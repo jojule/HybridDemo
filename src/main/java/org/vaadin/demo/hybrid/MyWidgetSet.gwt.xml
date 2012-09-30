@@ -9,4 +9,8 @@
 	<set-configuration-property name="devModeRedirectEnabled"
 		value="true" />
 
+	<!-- Use custom ApplicationConnection to enable offline mode -->
+	<replace-with class="org.vaadin.demo.hybrid.client.CustomApplicationConnection">
+		<when-type-is class="com.vaadin.client.ApplicationConnection" />
+	</replace-with>
 </module>
