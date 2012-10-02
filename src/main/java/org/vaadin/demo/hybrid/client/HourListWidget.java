@@ -43,7 +43,7 @@ public class HourListWidget extends VerticalPanel implements HourListEditor {
 		return parseMinutes(min.getValue());
 	}
 
-	public String getDesciption(int row) {
+	public String getDescription(int row) {
 		if (row >= getChildren().size())
 			return "";
 		Widget r = getChildren().get(row);

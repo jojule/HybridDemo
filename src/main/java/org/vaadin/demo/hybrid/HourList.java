@@ -12,8 +12,8 @@ import com.vaadin.ui.AbstractComponent;
 public class HourList extends AbstractComponent implements HourListEditor {
 
 	private HourListServerRpc rpc = new HourListServerRpc() {
-		public void hoursUpdated(ArrayList<HourEntry> hours) {
-			getState().hours = hours;
+		public void hourUpdated(HourEntry hour, int row) {
+			getState().hours.set(row, hour);
 		}
 	};
 
@@ -48,10 +48,21 @@ public class HourList extends AbstractComponent implements HourListEditor {
 		return getState().hours.get(row).minutes;
 	}
 
-	public String getDesciption(int row) {
+	public String getDescription(int row) {
 		if (row < 0 || row >= getState().hours.size())
 			return "";
 		return getState().hours.get(row).description;
+	}
+	
+	public String getText() {
+		StringBuilder sb = new StringBuilder();
+		for (int i=0;i<getState().hours.size();i++) {
+			sb.append(getMin(i));
+			sb.append("min - ");
+			sb.append(getDescription(i));
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 
 }

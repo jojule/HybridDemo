@@ -45,7 +45,10 @@ public class HourListConnector extends AbstractComponentConnector implements Cha
     }
 
 	public void hourListChange(HourListWidget hourList, int rowChanged) {
-		rpc.hoursUpdated(getState().hours);
+		HourEntry h = new HourEntry();
+		h.description = getWidget().getDescription(rowChanged);
+		h.minutes = getWidget().getMin(rowChanged);
+		rpc.hourUpdated(h, rowChanged);
 	}
 
 }
