@@ -1,6 +1,6 @@
 package org.vaadin.demo.hybrid;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import org.vaadin.demo.hybrid.client.HourListEditor;
 import org.vaadin.demo.hybrid.client.HourListServerRpc;
@@ -12,13 +12,13 @@ import com.vaadin.ui.AbstractComponent;
 public class HourList extends AbstractComponent implements HourListEditor {
 
 	private HourListServerRpc rpc = new HourListServerRpc() {
-		public void hoursUpdated(LinkedList<HourEntry> hours) {
+		public void hoursUpdated(ArrayList<HourEntry> hours) {
 			getState().hours = hours;
 		}
 	};
 
 	public HourList() {
-		getState().hours = new LinkedList<HourListState.HourEntry>();
+		getState().hours = new ArrayList<HourEntry>();
 		registerRpc(rpc);
 	}
 
@@ -37,6 +37,8 @@ public class HourList extends AbstractComponent implements HourListEditor {
 		HourEntry h = new HourEntry();
 		h.minutes = minutes;
 		h.description = description;
+		while (getState().hours.size()<row) 
+			getState().hours.add(new HourEntry());
 		getState().hours.set(row, h);
 	}
 

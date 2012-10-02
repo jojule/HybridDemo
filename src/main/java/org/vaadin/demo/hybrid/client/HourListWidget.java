@@ -1,5 +1,9 @@
 package org.vaadin.demo.hybrid.client;
 
+import java.util.ArrayList;
+
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -8,25 +12,18 @@ import com.google.gwt.user.client.ui.Widget;
 public class HourListWidget extends VerticalPanel implements HourListEditor {
 
 	public static final String CLASSNAME = "mycomponent";
+	ArrayList<ChangeListener> changeListeners = new ArrayList<ChangeListener>();
 
 	public HourListWidget() {
 		setStyleName(CLASSNAME);
-	}
-
-	public void addRow(int minutes, String description) {
-		HorizontalPanel h = new HorizontalPanel();
-		TextBox m = new TextBox();
-		TextBox d = new TextBox();
-		m.setValue(minutesAsString(minutes));
-		d.setValue(description);
-		h.add(m);
-		h.add(d);
-		add(h);
+		addEmptyRow();
 	}
 
 	public void setRow(int row, int minutes, String description) {
 		while (row >= getChildren().size())
-			addRow(0, "");
+			addEmptyRow();
+		if ((minutes != 0 || !"".equals(description))&&row == getChildren().size()-1)
+			addEmptyRow();
 		Widget r = getChildren().get(row);
 		if (!(r instanceof HorizontalPanel))
 			return;
@@ -56,6 +53,36 @@ public class HourListWidget extends VerticalPanel implements HourListEditor {
 		return descr.getValue();
 	}
 
+	private void addEmptyRow() {
+		final int row = getChildren().size();
+
+		HorizontalPanel h = new HorizontalPanel();
+		final TextBox m = new TextBox();
+		TextBox d = new TextBox();
+		m.setValue(minutesAsString(0));
+		d.setValue("");
+		h.add(m);
+		h.add(d);
+		add(h);
+		
+		m.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent e) {
+				m.setValue(minutesAsString(parseMinutes(m.getValue())));
+				if (row==getChildren().size()-1)
+					addEmptyRow();
+				fireChange(row);
+			}
+		});
+		
+		d.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent e) {
+				if (row==getChildren().size()-1)
+					addEmptyRow();
+				fireChange(row);
+			}
+		});		
+	}
+
 	private String minutesAsString(int minutes) {
 		int h = minutes / 60;
 		int m = minutes - h * 60;
@@ -72,6 +99,26 @@ public class HourListWidget extends VerticalPanel implements HourListEditor {
 			return h * 60 + m;
 		} catch (NumberFormatException e) {
 			return 0;
+		}
+	}
+	
+	public interface ChangeListener {
+		public void hourListChange(HourListWidget hourList, int rowChanged);
+	}
+	
+	public void addChangeListener(ChangeListener listener) {
+		changeListeners.add(listener);
+	}
+	public void removeChangeListener(ChangeListener listener) {
+		changeListeners.remove(listener);
+	}
+	public void removeAllChangeListener() {
+		changeListeners.clear();
+	}
+	@SuppressWarnings("unchecked")
+	private void fireChange(int rowChanged) {
+		for (ChangeListener l : (ArrayList<ChangeListener>) changeListeners.clone()) {
+			l.hourListChange(this,rowChanged);
 		}
 	}
 }

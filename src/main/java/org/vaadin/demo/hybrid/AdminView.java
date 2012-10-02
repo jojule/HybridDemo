@@ -10,6 +10,7 @@ public class AdminView extends VerticalLayout implements View {
 
 	public void enter(ViewChangeEvent event) {
 		Label l = new Label("Add Admin Functionality Here");
+		l.setSizeUndefined();
 		addComponent(l);
 		setSizeFull();
 		setComponentAlignment(l,Alignment.MIDDLE_CENTER);

@@ -24,6 +24,7 @@ public class MyUI extends UI {
 		layout.addComponent(buildMenu(navigator));
 		layout.addComponent(display);
 		layout.setExpandRatio(display, 1.0f);
+		display.setSizeFull();
 		setContent(layout);
 	}
 
@@ -47,7 +48,8 @@ public class MyUI extends UI {
 			});
 			navigator.addView(path, viewClass);
 		}
-
+		navigator.navigateTo("");
+		
 		return menu;
 	}
 }

@@ -5,11 +5,16 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 public class MyOfflineUI implements EntryPoint {
 
-	HourListWidget myWidget = new HourListWidget();
+	HourListWidget hourList = new HourListWidget();
 
 	public void onModuleLoad() {
 		RootPanel.getBodyElement().setInnerHTML("<h1>Offline mode</h1>");
-		RootPanel.get().add(myWidget);
+		RootPanel.get().add(hourList);
+		
+		for (int i = 0; i < 10; i++) {
+			hourList.setRow(i,(int)(Math.random()*200), "Desr " + i);
+		}
+
 	}
 
 }

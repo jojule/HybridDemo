@@ -9,7 +9,8 @@ import com.vaadin.ui.VerticalLayout;
 public class ReportView extends VerticalLayout implements View {
 
 	public void enter(ViewChangeEvent event) {
-		Label l = new Label("Add Admin Functionality Here");
+		Label l = new Label("Add Report Functionality Here");
+		l.setSizeUndefined();
 		addComponent(l);
 		setSizeFull();
 		setComponentAlignment(l,Alignment.MIDDLE_CENTER);

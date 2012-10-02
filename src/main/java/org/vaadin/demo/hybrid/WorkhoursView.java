@@ -11,7 +11,7 @@ public class WorkhoursView extends VerticalLayout implements View {
 
 	public void enter(ViewChangeEvent event) {
 		setSizeFull();
-		addComponent(new HourList());
+		addComponent(hourlist);
 		setComponentAlignment(hourlist, Alignment.MIDDLE_CENTER);
 		for (int i = 0; i < 10; i++) {
 			hourlist.addRow((int)(Math.random()*200), "Desr " + i);
